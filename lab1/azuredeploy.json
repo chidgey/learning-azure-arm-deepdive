@@ -2,23 +2,36 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "StorageAccountName": "cclabstorageac001",
+        "StorageAccountParam": {
         "type": "string",
         "metadata": {
-                "description": "ARM storage account, without Terraform."
+                "description": "Storage account, it must be unique."
             }
+        },
+        "StorageAccountTypeParam": {
+           "type": "string",
+           "defaultValue": "Standard_LRS",
+           "allowedValues": [
+               "Standard_LRS",
+               "Premium_LRS",
+               "Standard_RAGRS"
+           ],
+           "metadata": {
+                "description": "SKU for Storage Account."
+            }
+        }
     },
     "variables": {},
     "resources": [{
         "type": "Microsoft.Storage/storageAccounts",
         "apiVersion": "2018-07-01",
-        "name": "[parameters('StorageAccountName')]",
+        "name": "[parameters('StorageAccountParam')]",
         "location": "[resourceGroup().location]",
         "tags": {
-            "displayName": ""
+            "displayName": "[parameters('StorageAccountParam')]"
         },
         "sku": {
-            "name": "Standard_LRS"
+            "name": "[parameters('StorageAccountTypeParam')]"
         },
         "kind": "StorageV2"
     }],
