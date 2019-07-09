@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "adminUsername": {
+        "value": "AmazingAdmin"
+      },
+      "adminPassword": {
+        "reference": {
+          "keyVault": {
+            "id": "/subscriptions/59e899d9-a510-429d-abfa-66dfae8b3727/resourcegroups/lab3/providers/Microsoft.KeyVault/vaults/cclab2090"
+          },
+          "secretName": "WindowsDefaultPassword"
+      }
+      },
+      "dnsLabelPrefix": {
+        "value": "tentimestenvm"
+      },
+      "vmName": {
+          "value": "UKFastHost"
+      },
+      "numberOfDataDisks": {
+          "value": 2
+      },
+      "vnetName" : {
+        "value" : "VNet"
+      },
+      "vnetPrefix" : {
+        "value" : "10.0.0.0/16"
+      },
+      "subnetName" : {
+        "value" : "Subnet"
+      },
+      "subnetPrefix" : {
+        "value" : "10.0.0.0/24"
+      }
+    }
+  }
