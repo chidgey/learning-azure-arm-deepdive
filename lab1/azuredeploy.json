@@ -2,10 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "StorageAccountParam": {
+        "StorageAccountPrefix": {
         "type": "string",
+        "defaultValue": "cclab",
+        "maxLength": 11,
         "metadata": {
-                "description": "Storage account, it must be unique."
+                "description": "Prefix for storage account, it must be unique."
             }
         },
         "StorageAccountTypeParam": {
@@ -21,20 +23,28 @@
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "StorageAccountParam":
+        "[toLower(concat(parameters('StorageAccountPrefix'), uniqueString(resourceGroup().id)))]"
+    },
     "resources": [{
         "type": "Microsoft.Storage/storageAccounts",
         "apiVersion": "2018-07-01",
-        "name": "[parameters('StorageAccountParam')]",
+        "name": "[variables('StorageAccountParam')]",
         "location": "[resourceGroup().location]",
         "tags": {
-            "displayName": "[parameters('StorageAccountParam')]"
+            "displayName": "[variables('StorageAccountParam')]"
         },
         "sku": {
             "name": "[parameters('StorageAccountTypeParam')]"
         },
         "kind": "StorageV2"
     }],
-    "outputs": {}
+    "outputs": {
+        "storageAccount": {
+            "type": "string",
+            "value": "[variables('storageAccountParam')]"
+        }
+    }
 }
 

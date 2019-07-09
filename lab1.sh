@@ -7,6 +7,6 @@
 rg=lab1
 template=/d/projects/learning-azure-arm-deepdive/lab1/azuredeploy.json
 job=job2
-params="StorageAccountParam=\"cclabstorageac001\""
+params="StorageAccountPrefix=\"cclabstorageac\""
 
 echo az group deployment create --name $job --resource-group $rg --template-file $template --parameters $params
